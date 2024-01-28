@@ -64,7 +64,7 @@ To run this project, follow these steps:
 
 1. Clone the repository: git clone https://github.com/Saravana-kr22/Youtube_Data_Extraction_and_Visualization.git
 2. Install the required packages: `pip install -r requirements.txt'
-3. Run the Streamlit app: streamlit run app.py
+3. Run the Streamlit app: streamlit run web.py
 4. Access the app in your browser at http://localhost:8501
 
 ## FEATURES:
