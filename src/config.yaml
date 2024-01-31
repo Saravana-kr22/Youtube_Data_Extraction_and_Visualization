@@ -1,0 +1,6 @@
+config:
+    #Enter Your Google API Key here
+    Google_API_Key: ""
+
+    #Enter Your MongoDB URL here
+    MongoDB_URL: ""

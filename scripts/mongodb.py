@@ -1,7 +1,12 @@
 from pymongo.mongo_client import MongoClient
+import yaml
+
+with open("src/config.yaml", "r") as config:
+    config_data = yaml.safe_load(config)
+
 
 # url of the mongodb atas to connect to the server
-url = "url_from_MongoDB_atlas"
+url = config_data['config']['MongoDB_URL']
 
 class Mongodb:
     def __init__(self):

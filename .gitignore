@@ -1,0 +1,36 @@
+# Virtual environments
+venv/
+env/
+*.pyc
+*.pyo
+__pycache__
+
+# IDE files
+.vscode/
+.idea/
+
+# Compiled Python files
+*.pyc
+*.pyo
+__pycache__
+
+# Python cache
+*.pyc
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Data
+data/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# Environment configuration
+.env
+
+# Ignore compiled files for isodate (if any)
+isodate-*.dist-info/

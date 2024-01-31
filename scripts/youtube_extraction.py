@@ -1,7 +1,11 @@
 from googleapiclient.discovery import build
+import yaml
 
-# API key obtained fro the google cloud 
-api="Your_google_could_api_key"
+with open("src/config.yaml", "r") as config:
+    config_data = yaml.safe_load(config)
+
+# API key obtained from the google cloud 
+api= config_data['config']['Google_API_Key']
 
 # Api service for youtube to access data of the channel
 api_service_name = "youtube"
@@ -10,7 +14,7 @@ api_version = "v3"
 class Youtube:
     def __init__(self):
         self.youtube = build(api_service_name, api_version, 
-                                                developerKey=api)
+                             developerKey=api)
 
     #function to extract the channel details
     def channel_info(self, chid):
