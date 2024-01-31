@@ -102,7 +102,7 @@ After Migrating the data to SQL move to *Data Visualization* choose the one of t
 
 ## CONTRIBUTING
 
-Contributions to this project are welcome! If you encounter any issues or have suggestions for improvements, please feel free to submit a pull request.
+Contributions to this project are welcome! If you encounter any issues or have suggestions for improvements, please feel free to submit a issue or pull request.
 
 ## LICENSE
 
