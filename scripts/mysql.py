@@ -5,10 +5,61 @@ from scripts.mongodb import*
 class Mysql(Mongodb):
     def __init__(self, channel):
         super().__init__()
-        self.dbconnection = sql.connect( host = "host", user ="root",
-                                          password = "password", database = "database")
+        self.dbconnection = sql.connect( host = "mysqldb", user ="user",
+                                          password = "password", database = "youtube")
         self.cursor = self.dbconnection.cursor()
         self.channel= channel
+
+    def check_tables(self):
+        query_check ="""SHOW TABLES"""
+        self.cursor.execute(query_check)
+        tables = self.cursor.fetchall()
+        return (bool(tables))
+
+    def create_table(self):
+        query_tables =["""
+                       CREATE TABLE Channel (
+                        channel_id VARCHAR(255) PRIMARY KEY,
+                        channel_name VARCHAR(255),
+                        channel_subscription INT,
+                        channel_views INT,
+                        channel_description TEXT
+                      );""",
+                      """CREATE INDEX idx_channel_name ON Channel(channel_name); """,
+                      """CREATE TABLE Playlist (
+                        playlist_id VARCHAR(255) PRIMARY KEY,
+                        channel_id VARCHAR(255),
+                        channel_name VARCHAR(255),
+                        FOREIGN KEY (channel_id) REFERENCES Channel(channel_id)
+                      );""",
+                      """CREATE TABLE Video (
+                        video_id VARCHAR(255) PRIMARY KEY,
+                        video_name VARCHAR(255),
+                        video_description TEXT,
+                        published_date VARCHAR(255),
+                        view_count INT,
+                        like_count INT,
+                        comment_count INT,
+                        duration INT,
+                        channel_name VARCHAR(255),  
+                        FOREIGN KEY (channel_name) REFERENCES Channel(channel_name)
+                      );""",
+                      """CREATE TABLE Comment (
+                        comment_id VARCHAR(255) PRIMARY KEY,
+                        video_id VARCHAR(255),
+                        channel_id VARCHAR(255),
+                        comment_text TEXT,
+                        comment_author VARCHAR(255),
+                        FOREIGN KEY (video_id) REFERENCES Video(video_id),
+                        FOREIGN KEY (channel_id) REFERENCES Channel(channel_id)
+                      );
+                      """]
+        
+        for table in query_tables:
+            self.cursor.execute(table)
+        self.dbconnection.commit()  
+        return()
+    
         
     def channel_table(self):
         db = self.client["youtube_data_harversting"]
@@ -45,7 +96,7 @@ class Mysql(Mongodb):
         for playlist in data[0]:
             if playlist:
                 query_playlist = """
-                        INSERT INTO playlist (
+                        INSERT INTO Playlist (
                             playlist_id,
                             channel_id,
                             channel_name
@@ -110,16 +161,18 @@ class Mysql(Mongodb):
                 for i in range(len(comment)):
                     query_Comment = """
                             INSERT INTO Comment (
+                                comment_id,
                                 video_id,
                                 channel_id,
                                 comment_text,
                                 comment_author
-                                )VALUES(%s,%s,%s,%s)       
+                                )VALUES(%s,%s,%s,%s,%s)       
                         """
-                    comment_values = (comment[i]['Video_Id'],
-                                        channel_id,
-                                        comment[i]['Comment_Text'],
-                                        comment[i]['Comment_Author'])
+                    comment_values=(comment[i]['Comment_Id'],
+                                    comment[i]['Video_Id'],
+                                    channel_id,
+                                    comment[i]['Comment_Text'],
+                                    comment[i]['Comment_Author'])
                     self.cursor.execute(query_Comment, comment_values)
         self.dbconnection.commit()  
         return()  
@@ -132,11 +185,15 @@ class Mysql(Mongodb):
     
     def  list_channel_names(self): 
         cursor = self.dbconnection.cursor()
-        cursor.execute("select channel_name,channel_subscription,channel_views from channel")
+        cursor.execute("SELECT channel_name,channel_subscription,channel_views from Channel")
         list_name = cursor.fetchall()
         return(list_name) 
     
     def migrate_sql(self):
+
+        if not self.check_tables():
+            self.create_table()
+
         try:
             self.channel_table()
         except sql.Error as er:
@@ -147,6 +204,7 @@ class Mysql(Mongodb):
         self.playlist_table()
         self.video_table()
         self.comment_table()
+        self.dbconnection.close()
         return(True)
 
          
