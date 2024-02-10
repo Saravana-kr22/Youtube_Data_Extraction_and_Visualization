@@ -3,4 +3,4 @@ config:
     Google_API_Key: ""
 
     #Enter Your MongoDB URL here
-    MongoDB_URL: ""
+    MongoDB_URL: "mongodb+srv://saravana:Saravana22@cluster0.fcz359j.mongodb.net/?retryWrites=true&w=majority"

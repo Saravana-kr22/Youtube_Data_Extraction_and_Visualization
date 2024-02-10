@@ -9,13 +9,13 @@ services:
     ports:
       - "8501:8501"
     depends_on:
-      - mysql-db
+      - mysqldb
 
-  mysql-db:
+  mysqldb:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mydatabase
+      MYSQL_DATABASE: youtube
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:

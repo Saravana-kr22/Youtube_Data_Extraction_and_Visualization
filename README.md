@@ -51,10 +51,10 @@ Matplotlib is a 2D plotting library for creating static, animated, and interacti
 ## Installation
 
 To run this project, you need the following:
-```Python3, 
+``` 
 Google API Key, 
 MongoDB ATLAS URL,
-MySQL
+Docker Enigne
 ```
 To install all the requried lib for python `pip install -r requirements.txt`
 
@@ -63,9 +63,8 @@ To install all the requried lib for python `pip install -r requirements.txt`
 To run this project, follow these steps:
 
 1. Clone the repository: git clone https://github.com/Saravana-kr22/Youtube_Data_Extraction_and_Visualization.git
-2. Install the required packages: `pip install -r requirements.txt'
-3. Run the Streamlit app: streamlit run web.py
-4. Access the app in your browser at http://localhost:8501
+2. Open the terimal or Command prompt on this cloned folder and pass the command `docker compose up`.
+3. Access the app in your browser at http://localhost:8501 after the docker is up.
 
 ## FEATURES:
 
@@ -90,9 +89,9 @@ After extracting the channel details move to *Manage DataBase* tab and select th
 
 After Storing the data in MongoDB to Migrate tha to SQL select the channel names in the selecbox under the *MySQL* tab and then press the *Migrate to MySQL* button to migrtae it to SQL Tables
 
-![MySQL!](/src/mysql.png "MySQL")S
+![MySQL!](/src/mysql.png "MySQL")
 
-*Note:* Before this step you need to create a table in the database schema in Mysql.please refer [mysql.py](/scripts/mysql.py) for the table structure
+*Note:* The tables for this database schema is create in the Mysql docker.please refer [mysql.py](/scripts/mysql.py) for the table structure. If you want to make any change update the code and [docker-compose.yaml](docker-compose.yml).
 
 4. Search and retrieval of data from the SQL database using different search options.
 
@@ -110,6 +109,6 @@ This project is licensed under the MIT License. Please review the LICENSE file f
 
 ## CONTACT
 
-📧 Email: mailto:smartsaravana002@gmail.com 
+📧 Email: smartsaravana002@gmail.com 
 
 For any further questions or inquiries, feel free to reach out. 
